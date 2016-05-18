@@ -7,8 +7,29 @@ var {
 } = React;
 
 var Weather = React.createClass({
+  getInitialState: function () {
+    return {
+      pin: {
+        latitude: 0,
+        longitude: 0
+      }
+    };
+  },
   render: function () {
-    return <MapView style={styles.map}></MapView>
+    return <MapView
+              annotations={[this.state.pin]} // anotations expects an array
+              style={styles.map}
+              onRegionChangeComplete={this.onRegionChangeComplete}
+              >
+          </MapView>
+  },
+  onRegionChangeComplete: function (region) {
+    this.setState({
+      pin: {
+        longitude: region.longitude,
+        latitude: region.latitude
+      }
+    })
   }
 });
 
